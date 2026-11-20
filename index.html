@@ -214,6 +214,64 @@ table.res td.v{text-align:right;white-space:nowrap;font-weight:800}
 .toast.show{opacity:1;transform:translateX(-50%)}
 .cf{position:fixed;width:9px;height:14px;border-radius:3px;z-index:60;pointer-events:none}
 
+.lightbox{position:fixed;inset:0;z-index:70;background:rgba(0,0,0,.9);display:none;place-items:center;padding:16px}
+.lightbox.on{display:grid}
+.lightbox img{max-width:100%;max-height:88vh;border-radius:12px;animation:pop3d .4s var(--ease)}
+.modal{position:fixed;inset:0;z-index:65;display:none;place-items:center;padding:18px;background:rgba(0,0,0,.55);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px)}
+.modal.on{display:grid}
+.modal .box{width:min(460px,100%);padding:18px;animation:pop3d .45s var(--ease);background:linear-gradient(180deg,rgba(20,32,46,.95),rgba(10,18,30,.97))}
+
+/* ---------- Connexion ---------- */
+.login{position:fixed;inset:0;z-index:80;display:none;overflow-y:auto;perspective:1200px}
+body.locked .login{display:block}
+body.locked .app,body.locked .dock{display:none}
+.login.leaving .lg-in{animation:lgOut .42s var(--ease) forwards}
+@keyframes lgOut{to{opacity:0;transform:translateZ(260px) scale(1.15);filter:blur(8px)}}
+.lg-in{min-height:100%;max-width:460px;margin:0 auto;padding:calc(48px + env(safe-area-inset-top)) 22px 30px;display:flex;flex-direction:column;align-items:center;text-align:center;animation:pop3d .6s var(--ease) both}
+.lg-logo{width:74px;height:74px;border-radius:24px;display:grid;place-items:center;background:linear-gradient(135deg,var(--acc),var(--acc2));color:#03201b;box-shadow:0 0 40px rgba(46,230,197,.5);margin-bottom:16px;animation:bob 3s ease-in-out infinite}
+.lg-logo svg{width:40px;height:40px}
+.lg-h{margin:0 0 4px;font-size:30px;letter-spacing:-.02em;background:linear-gradient(90deg,#fff,#bff7ec 60%,#9fd8ff);-webkit-background-clip:text;background-clip:text;color:transparent}
+.profiles{display:grid;grid-template-columns:1fr 1fr;gap:14px;width:100%}
+.profile{display:flex;flex-direction:column;align-items:center;gap:6px;padding:22px 10px 16px;cursor:pointer;border-radius:26px;animation:cardIn .7s var(--spring) both;animation-delay:calc(var(--i)*120ms + 150ms);transition:transform .35s var(--spring)}
+.profile:active{transform:scale(.94)}
+.profile.chosen{transform:perspective(800px) rotateY(180deg) scale(.9);opacity:.4;transition:all .3s ease-in}
+@keyframes cardIn{from{opacity:0;transform:perspective(800px) rotateY(-70deg) translateY(30px)}to{opacity:1;transform:none}}
+.profile b{font-size:17px}
+.profile small{color:var(--mut);font-size:12px;letter-spacing:.08em}
+.profile em{font-style:normal;font-size:11px;margin-top:6px;padding:3px 9px;border-radius:999px;background:rgba(255,255,255,.07);border:1px solid var(--line);color:var(--mut)}
+.pav{width:72px;height:72px;border-radius:24px;display:grid;place-items:center;font-weight:900;font-size:24px;color:#0a1420;margin-bottom:6px}
+.pav.big{width:84px;height:84px;font-size:28px;border-radius:28px;animation:popDot .6s var(--spring) both}
+.pad-in{position:relative}
+.lg-back{position:absolute;left:16px;top:calc(14px + env(safe-area-inset-top));border:1px solid var(--line);background:rgba(255,255,255,.06);border-radius:12px;padding:7px 12px;cursor:pointer;font-weight:600}
+.lg-name{margin:6px 0 18px;font-size:20px}
+.lg-t{font-weight:800;font-size:17px}
+.dots{display:flex;gap:14px;margin:22px 0 8px}
+.dots i{width:15px;height:15px;border-radius:50%;border:2px solid rgba(255,255,255,.35);transition:all .25s var(--spring)}
+.dots i.on{background:var(--acc);border-color:var(--acc);box-shadow:0 0 14px var(--acc);transform:scale(1.15)}
+.dots.ok i{background:var(--ok);border-color:var(--ok);box-shadow:0 0 16px var(--ok)}
+.dots.shake{animation:shake .45s}
+.dots.shake i{border-color:var(--hi)}
+@keyframes shake{20%,60%{transform:translateX(-12px)}40%,80%{transform:translateX(12px)}}
+.lg-msg{min-height:20px;font-size:13px;color:#ff9aab;margin-bottom:8px}
+.keypad{display:grid;grid-template-columns:repeat(3,76px);gap:16px 26px;justify-content:center;margin-top:4px}
+.key{width:76px;height:76px;border-radius:50%;border:1px solid rgba(255,255,255,.16);background:linear-gradient(145deg,rgba(255,255,255,.12),rgba(255,255,255,.03));backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);font-size:26px;font-weight:600;cursor:pointer;transition:transform .15s var(--spring),background .15s,box-shadow .2s;box-shadow:inset 0 1px 0 rgba(255,255,255,.18)}
+.key:active{transform:scale(.88);background:rgba(46,230,197,.25);box-shadow:0 0 22px rgba(46,230,197,.5)}
+.key.ghost{background:none;border:0;box-shadow:none;font-size:15px;color:var(--mut);backdrop-filter:none}
+.key.ghost[data-k=del]{font-size:24px}
+@media (max-height:700px){.keypad{grid-template-columns:repeat(3,64px);gap:12px 22px}.key{width:64px;height:64px;font-size:22px}.lg-in{padding-top:26px}}
+
+/* ---------- Sync / formulaires connexion ---------- */
+.avwrap{position:relative;cursor:pointer}
+.sync{position:absolute;right:-3px;bottom:-3px;width:13px;height:13px;border-radius:50%;border:2.5px solid #08111d;background:#64748b;transition:background .3s}
+.sync.ok{background:var(--ok);box-shadow:0 0 10px var(--ok)}
+.sync.wait{background:var(--lim);box-shadow:0 0 10px var(--lim);animation:blink 1s infinite}
+.sync.off{background:#94a3b8}
+@keyframes blink{50%{opacity:.35}}
+.lg-form{width:100%;padding:18px;text-align:left;margin-top:4px}
+.modal{position:fixed;inset:0;z-index:90;display:none;place-items:center;padding:18px;background:rgba(0,0,0,.55);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px)}
+.modal.on{display:grid}
+.modal .box{width:min(460px,100%);padding:18px;animation:pop3d .45s var(--ease);background:linear-gradient(180deg,rgba(20,32,46,.96),rgba(10,18,30,.98))}
+
 /* ---------- 3D tilt ---------- */
 .tilt{transform:perspective(900px) rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg));transition:transform .3s ease-out;transform-style:preserve-3d}
 
@@ -262,7 +320,7 @@ html[data-dir=fade]::view-transition-new(page){animation-name:flipIn}
   <header class="topbar" id="topbar">
     <button class="icon-btn back glass" id="backBtn" aria-label="Retour"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></button>
     <div class="grow"><div class="kicker" id="kicker">Mon dossier médical</div><h1 id="title">Ma santé</h1></div>
-    <div class="avatar" id="avatar">P</div>
+    <div class="avwrap" id="avwrap"><div class="avatar" id="avatar">P</div><i class="sync" id="sync"></i></div>
   </header>
   <main id="view"></main>
 </div>
@@ -279,60 +337,146 @@ html[data-dir=fade]::view-transition-new(page){animation-name:flipIn}
 <div class="sheet-bg" id="sheetBg"></div>
 <div class="sheet glass" id="sheet">
   <div class="grab"></div>
+  <div id="sheetUser" style="display:flex;align-items:center;gap:12px;padding:2px 6px 12px"></div>
   <button class="item" data-act="install"><span class="e">📲</span><span>Installer sur l'écran d'accueil<small>Utiliser comme une vraie appli</small></span></button>
   <button class="item" data-act="export"><span class="e">⬇️</span><span>Exporter mes données<small>Sauvegarde .json à garder en lieu sûr</small></span></button>
-  <button class="item" data-act="import"><span class="e">⬆️</span><span>Importer une sauvegarde<small>Remplace les données de cet appareil</small></span></button>
+  <button class="item" data-act="import"><span class="e">⬆️</span><span>Importer une sauvegarde<small>Remplace les données de ton profil</small></span></button>
   <button class="item" data-act="print"><span class="e">🖨️</span><span>Imprimer / PDF<small>Version papier pour le médecin</small></span></button>
-  <button class="item" data-act="reset"><span class="e">↺</span><span>Réinitialiser<small>Revenir au bilan initial</small></span></button>
+  <button class="item" data-act="pin"><span class="e">🔑</span><span>Changer mon code rapide<small>Code à 6 chiffres de ce téléphone</small></span></button>
+  <button class="item" data-act="pw"><span class="e">🔐</span><span>Changer mon mot de passe<small>Mot de passe du dossier</small></span></button>
+  <button class="item" data-act="sync"><span class="e">☁️</span><span>Synchroniser maintenant<small>Envoyer / récupérer les dernières données</small></span></button>
+  <button class="item" data-act="logout"><span class="e">🔒</span><span>Verrouiller / changer de profil<small>Ton code rapide sera demandé</small></span></button>
+  <button class="item" data-act="unlink"><span class="e">🚪</span><span>Déconnecter ce téléphone<small>Retire ton compte de cet appareil</small></span></button>
+  <button class="item" data-act="reset"><span class="e">🗑️</span><span>Effacer mes données<small>Vide ton registre (aussi en ligne)</small></span></button>
   <input type="file" id="fileIn" accept="application/json,.json" hidden>
 </div>
 <div class="toast glass" id="toast"></div>
+<div class="login" id="login"></div>
+<div class="modal" id="pwModal"><div class="box glass">
+  <div class="lg-t" style="text-align:left">🔐 Nouveau mot de passe</div>
+  <p class="small muted">Mot de passe du dossier : il sert à te connecter sur un nouveau téléphone. Ton dossier est rechiffré avec lui. 8 caractères minimum.</p>
+  <div class="mb"><label class="f">Nouveau mot de passe</label><input class="in" id="pw1" type="password" autocomplete="new-password"></div>
+  <div class="mb"><label class="f">Confirmer</label><input class="in" id="pw2" type="password" autocomplete="new-password"></div>
+  <div class="lg-msg" id="pwMsg" style="text-align:left"></div>
+  <div class="btn-row"><button class="btn" id="pwCancel">Annuler</button><button class="btn primary" id="pwSave">Valider</button></div>
+</div></div>
+<div class="lightbox" id="lightbox"><img alt="Document"></div>
+
 
 <script>
 /* ============ DONNÉES INITIALES ============ */
-const SEED_ROWS = [
- ['Biochimie','Acide urique','437','µmol/L',202.3,416.5,'Au-dessus de la limite haute imprimée.'],
- ['Biochimie','ALAT','25,1','U/L',10,50,''],
- ['Biochimie','ASAT','29,4','U/L',10,50,''],
- ['Biochimie','Cholestérol total','3,69','mmol/L',2.6,6.2,''],
- ['Biochimie','Créatininémie','87,9','µmol/L',62,106,''],
- ['Biochimie','Glycémie','3,91','mmol/L',4.11,6.05,'Sous la limite basse imprimée.'],
- ['Biochimie','HDL cholestérol','1,07','mmol/L',1.0,2.0,''],
- ['Biochimie','LDL cholestérol','2,11','mmol/L',0.4,4.16,''],
- ['Biochimie','Triglycérides','1,41','mmol/L',0.5,1.8,''],
- ['Hématologie','Leucocytes','7,37','10^3/µL',4,10,''],
- ['Hématologie','Neutrophiles absolus','3,32','10^3/µL',1.2,7.5,''],
- ['Hématologie','Neutrophiles','45,1','%',null,null,''],
- ['Hématologie','Lymphocytes absolus','3,23','10^3/µL',1.5,4,''],
- ['Hématologie','Lymphocytes','43,8','%',null,null,''],
- ['Hématologie','Monocytes absolus','0,61','10^3/µL',0.1,1,''],
- ['Hématologie','Monocytes','8,3','%',null,null,''],
- ['Hématologie','Éosinophiles absolus','0,14','10^3/µL',0.05,0.5,''],
- ['Hématologie','Éosinophiles','1,9','%',null,null,''],
- ['Hématologie','Basophiles absolus','0,07','10^3/µL',0,0.05,'Signalés + sur le compte rendu.'],
- ['Hématologie','Basophiles','0,9','%',null,null,''],
- ['Hématologie','Granulocytes immatures absolus','0,02','10^3/µL',null,null,''],
- ['Hématologie','Granulocytes immatures','0,3','%',null,null,''],
- ['Hématologie','Globules rouges / hématies','6,14','10^6/µL',4.5,6,'Signalés + sur le compte rendu.'],
- ['Hématologie','Hémoglobine','13,1','g/dL',13,17,'Proche de la limite basse.'],
- ['Hématologie','Hématocrite','37,8','%',40,54,'Sous la limite basse imprimée.'],
- ['Hématologie','VGM','61,6','fL',80,100,'Sous la limite basse imprimée.'],
- ['Hématologie','TCMH','21,3','pg',27,34,'Sous la limite basse imprimée.'],
- ['Hématologie','CCMH','34,7','g/dL',32,36,''],
- ['Hématologie','IDR-SD / RDW-SD','40,6','fL',37,54,''],
- ['Hématologie','IDR-CV / RDW-CV','20,8','%',11,14,'Signalé + sur le compte rendu.'],
- ['Hématologie','Plaquettes','234','10^3/µL',150,400,''],
- ['Hématologie','Érythroblastes','0,00','10^3/µL',null,null,'0,0 % indiqué.'],
- ['Hématologie','Commentaire automate','Anisocytose ; microcytose','',null,null,'Le compte rendu mentionne aussi « PLT Abn Distribution ».'],
-];
-const SEED={version:1,bilans:[{id:'b-initial',date:'2026-11-20',titre:'Bilan biologique complet',labo:'',notes:'Date à corriger si besoin (Modifier le bilan).',
-  resultats:SEED_ROWS.map(([cat,param,val,unit,min,max,obs])=>({cat,param,val,unit,min,max,obs}))}]};
+
 
 /* ============ STOCKAGE ============ */
+/* ============ STOCKAGE EN LIGNE : dépôt GitHub privé ============
+   Les dossiers sont enregistrés (chiffrés) dans un dépôt PRIVÉ, un fichier par personne.
+   Si l'appli est publiée sur <compte>.github.io, le compte est détecté tout seul. */
+const GH_OWNER = '';                    // laisser vide = détecté depuis l'adresse <compte>.github.io
+const GH_REPO  = 'dossier-sante-data';  // nom du dépôt privé des données
+
 const KEY='dossier-sante-v1';
-let db=load();
-function load(){ try{ const s=localStorage.getItem(KEY); if(s){ const d=JSON.parse(s); if(d&&Array.isArray(d.bilans)) return d; } }catch(e){} return structuredClone(SEED); }
-function save(){ try{ localStorage.setItem(KEY,JSON.stringify(db)); }catch(e){ toast('⚠️ Stockage indisponible — exportez vos données'); } }
+let db=null, user=null, dek=null;
+const USERS=[
+  {id:'mathieu',name:'Mathieu ZANGRE',first:'Mathieu',ini:'MZ',g:'linear-gradient(135deg,#2ee6c5,#38bdf8)',glow:'rgba(46,230,197,.55)'},
+  {id:'ines',name:'Ines ZIGANE',first:'Ines',ini:'IZ',g:'linear-gradient(135deg,#f472b6,#a78bfa)',glow:'rgba(244,114,182,.55)'}
+];
+const cfgGH=()=>{
+  let c={}; try{ c=JSON.parse(localStorage.getItem('ds-gh'))||{}; }catch(e){}
+  const auto=location.hostname.endsWith('.github.io')?location.hostname.split('.')[0]:'';
+  const owner=(GH_OWNER||c.owner||auto).trim(), repo=(c.repo||GH_REPO).trim();
+  return owner&&repo?{owner,repo}:null;
+};
+
+/* ---------- Chiffrement (AES-GCM 256, clés dérivées PBKDF2) ---------- */
+const te=new TextEncoder(),td=new TextDecoder();
+const toB64=buf=>{ const u=new Uint8Array(buf); let s=''; for(let i=0;i<u.length;i+=0x8000) s+=String.fromCharCode.apply(null,u.subarray(i,i+0x8000)); return btoa(s); };
+const fromB64=b=>Uint8Array.from(atob(b),c=>c.charCodeAt(0));
+const rand=n=>crypto.getRandomValues(new Uint8Array(n));
+async function pbk(secret,salt){ const base=await crypto.subtle.importKey('raw',te.encode(secret),'PBKDF2',false,['deriveKey']);
+  return crypto.subtle.deriveKey({name:'PBKDF2',salt,iterations:250000,hash:'SHA-256'},base,{name:'AES-GCM',length:256},false,['encrypt','decrypt']); }
+async function encRaw(key,bytes){ const iv=rand(12); return {iv:toB64(iv),ct:toB64(await crypto.subtle.encrypt({name:'AES-GCM',iv},key,bytes))}; }
+async function decRaw(key,o){ return new Uint8Array(await crypto.subtle.decrypt({name:'AES-GCM',iv:fromB64(o.iv)},key,fromB64(o.ct))); }
+const encJSON=(key,obj)=>encRaw(key,te.encode(JSON.stringify(obj)));
+const decJSON=async(key,o)=>JSON.parse(td.decode(await decRaw(key,o)));
+const newDEK=()=>crypto.subtle.generateKey({name:'AES-GCM',length:256},true,['encrypt','decrypt']);
+const rawDEK=async k=>new Uint8Array(await crypto.subtle.exportKey('raw',k));
+const importDEK=raw=>crypto.subtle.importKey('raw',raw,'AES-GCM',true,['encrypt','decrypt']);
+
+/* ---------- Appareil : code rapide + jeton + cache chiffrés ---------- */
+const DEV=id=>'ds-dev-'+id;
+const getDev=id=>{ try{ return JSON.parse(localStorage.getItem(DEV(id))); }catch(e){ return null; } };
+const setDev=(id,o)=>localStorage.setItem(DEV(id),JSON.stringify(o));
+
+/* ---------- API GitHub (Contents) ---------- */
+const G={tok:null};
+async function gh(path,opt={}){
+  const c=cfgGH(); if(!c) throw new Error('Dépôt GitHub non configuré');
+  let r;
+  try{ r=await fetch(`https://api.github.com/repos/${c.owner}/${c.repo}${path}`,{method:opt.method||'GET',cache:'no-store',
+      headers:{'Accept':'application/vnd.github+json','Authorization':'Bearer '+G.tok,'X-GitHub-Api-Version':'2022-11-28',...(opt.body?{'Content-Type':'application/json'}:{})},body:opt.body}); }
+  catch(e){ const er=new Error('Pas de connexion internet'); er.offline=true; throw er; }
+  if(!r.ok){ let m=''; try{ m=(await r.json()).message||''; }catch(e){}
+    const er=new Error(r.status===401?'Jeton GitHub invalide ou expiré':r.status===403?'Jeton sans droit d\'écriture sur le dépôt (Contents : Read and write)':r.status===404?'Introuvable':(m||'Erreur GitHub '+r.status));
+    er.status=r.status; throw er; }
+  return r.status===204?null:r.json();
+}
+const fileOf=id=>`/contents/${id}.json`;
+async function checkRepo(){ try{ await gh(''); }catch(e){ if(e.status===404){ const c=cfgGH(); throw new Error(`Dépôt ${c.owner}/${c.repo} introuvable, ou le jeton n'y a pas accès`); } throw e; } }
+async function getFile(id){ try{ const j=await gh(fileOf(id)); return {sha:j.sha,row:JSON.parse(atob(j.content.replace(/\n/g,'')))}; }catch(e){ if(e.status===404) return null; throw e; } }
+async function putFile(id,row,sha){
+  const j=await gh(fileOf(id),{method:'PUT',body:JSON.stringify({message:'Mise à jour '+id+' — '+new Date().toISOString().slice(0,16).replace('T',' '),content:btoa(JSON.stringify(row)),...(sha?{sha}:{})})});
+  return j.content.sha;
+}
+
+/* ---------- Indicateur de synchronisation ---------- */
+function setSync(st){ const el=$('#sync'); if(!el) return; el.className='sync '+st;
+  el.title={ok:'Synchronisé',wait:'Synchronisation…',off:'Hors ligne — sera envoyé plus tard'}[st]||''; }
+
+/* ---------- Enregistrement : cache chiffré local + envoi sur GitHub ---------- */
+let saveChain=Promise.resolve();
+function save(){
+  if(!user||!dek) return; const snap=structuredClone(db),u=user.id;
+  setSync('wait');
+  saveChain=saveChain.then(async()=>{
+    const e=await encJSON(dek,snap), d=getDev(u); if(!d) return;
+    d.cache={...e,updated_at:new Date().toISOString()}; d.dirty=true; setDev(u,d);
+    if(user&&user.id===u) await pushData();
+  }).catch(err=>{ console.error(err); toast('⚠️ Enregistrement impossible — exporte tes données'); });
+}
+async function pushData(){
+  const u=user&&user.id, d=u&&getDev(u); if(!d||!d.dirty){ setSync('ok'); return; }
+  try{
+    const cur=await getFile(u);
+    const row={...(cur?cur.row:d.wrap),v:1,data_iv:d.cache.iv,data_ct:d.cache.ct,updated_at:d.cache.updated_at};
+    const sha=await putFile(u,row,cur&&cur.sha);
+    const d2=getDev(u); d2.sha=sha; if(d2.cache.updated_at===d.cache.updated_at) d2.dirty=false; setDev(u,d2);
+    setSync(d2.dirty?'wait':'ok');
+  }catch(e){ setSync('off'); if(!e.offline) console.warn(e); }
+}
+/* Récupère la version en ligne si elle a été modifiée ailleurs */
+async function pull(){
+  if(!user||!dek) return false;
+  try{
+    const d=getDev(user.id); if(!d) return false;
+    if(d.dirty){ await pushData(); return false; }
+    const f=await getFile(user.id); if(!f){ setSync('ok'); return false; }
+    if(f.sha!==d.sha&&f.row.data_ct!==d.cache.ct){
+      db=await decJSON(dek,{iv:f.row.data_iv,ct:f.row.data_ct});
+      d.cache={iv:f.row.data_iv,ct:f.row.data_ct,updated_at:f.row.updated_at}; d.sha=f.sha; setDev(user.id,d); setSync('ok'); return true;
+    }
+    d.sha=f.sha; setDev(user.id,d); setSync('ok'); return false;
+  }catch(e){ setSync('off'); return false; }
+}
+window.addEventListener('online',()=>{ if(user) pushData(); });
+
+/* Pièces jointes (photos / PDF) dans IndexedDB */
+const IDB={
+  _d:null,
+  open(){ return this._d||(this._d=new Promise((res,rej)=>{ const r=indexedDB.open('dossier-sante',1); r.onupgradeneeded=()=>r.result.createObjectStore('pj',{keyPath:'id'}); r.onsuccess=()=>res(r.result); r.onerror=()=>rej(r.error); })); },
+  async tx(mode,fn){ const d=await this.open(); return new Promise((res,rej)=>{ const t=d.transaction('pj',mode); const q=fn(t.objectStore('pj')); t.oncomplete=()=>res(q&&q.result); t.onerror=()=>rej(t.error); }); },
+  put(o){ return this.tx('readwrite',s=>s.put(o)); }, get(id){ return this.tx('readonly',s=>s.get(id)); },
+  del(id){ return this.tx('readwrite',s=>s.delete(id)); }, all(){ return this.tx('readonly',s=>s.getAll()); }, clear(){ return this.tx('readwrite',s=>s.clear()); }
+};
 
 /* ============ OUTILS ============ */
 const CATS=['Biochimie','Hématologie','Hormonologie','Sérologie','Immunologie','Urines','Constantes','Imagerie','Autre'];
@@ -391,7 +535,8 @@ let lastKey=null;
 const ui={filter:'Tous',q:'',dir:'fade'};
 function setHeader(title,kicker,back){
   $('#title').textContent=title; $('#kicker').textContent=kicker||'Mon dossier médical';
-  $('#topbar').classList.toggle('has-back',!!back); $('#avatar').style.display=back?'none':'grid';
+  $('#topbar').classList.toggle('has-back',!!back); $('#avwrap').style.display=back?'none':'block';
+  if(user){ const a=$('#avatar'); a.textContent=user.ini; a.style.background=user.g; a.style.boxShadow='0 0 18px '+user.glow; }
   $('#backBtn').onclick=()=>{ buzz(); if(navDepth>0) history.back(); else location.hash=back; };
 }
 function countUp(el){
@@ -426,8 +571,14 @@ function morphBack(){
 
 /* ============ VUES ============ */
 function vRegistre(){
-  setHeader('Ma santé','Registre général',false);
+  setHeader('Ma santé','Bonjour '+user.first+' 👋',false);
   const R=[...registre().values()];
+  if(!R.length){ $('#view').innerHTML=`<div class="card glass tilt" id="hero" style="text-align:center;padding:34px 18px">
+      <span class="emo" style="font-size:58px;display:block;animation:bob 2.4s ease-in-out infinite">🩺</span>
+      <h2 style="margin:10px 0 6px">Bienvenue ${esc(user.first)} !</h2>
+      <p class="muted small">Ton registre santé est vide pour l'instant.<br>Ajoute ton premier bilan pour le voir apparaître ici.</p>
+      <div class="btn-row"><a class="btn primary" href="#/ajouter">＋ Ajouter mon premier bilan</a></div></div>
+      <p class="foot">🔒 Chiffré de bout en bout · ☁️ synchronisé en ligne</p>`; return; }
   const out=R.filter(p=>p.st==='haut'||p.st==='bas');
   const withRef=R.filter(p=>p.st!=='info');
   const pct=withRef.length?Math.round(withRef.filter(p=>p.st==='normal'||p.st==='limite').length/withRef.length*100):100;
@@ -450,7 +601,7 @@ function vRegistre(){
     <div class="search glass"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" opacity=".55"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg><input id="q" placeholder="Rechercher un paramètre…" value="${esc(ui.q)}"></div>
     <div class="chips" id="chips">${['Tous','Hors norme',...cats].map(c=>`<button class="chip ${ui.filter===c?'on':''}" data-c="${esc(c)}">${esc(c)}</button>`).join('')}</div>
     <div id="list"></div>
-    <p class="foot">🔒 Données enregistrées uniquement sur cet appareil · Exportez via « Plus ».<br>Ce registre ne remplace pas l'avis d'un médecin.</p>`;
+    <p class="foot">🔒 Chiffré de bout en bout · ☁️ synchronisé en ligne<br>Ce registre ne remplace pas l'avis d'un médecin.</p>`;
   const draw=()=>{
     const q=keyOf(ui.q);
     let L=R.filter(p=>!q||p.key.includes(q));
@@ -546,7 +697,7 @@ function vBilans(){
         <div class="date-box"><b>${fmtDate(b.date,{day:'2-digit'})}</b><span>${fmtDate(b.date,{month:'short'})}<br>${fmtDate(b.date,{year:'numeric'})}</span></div>
         <div style="flex:1;min-width:0"><div class="row-name">${esc(b.titre||'Bilan')}</div>
           <div class="row-sub">${esc(b.labo||'Laboratoire non précisé')}</div>
-          <div style="margin-top:6px;font-size:12px">${b.resultats.length} résultats · ${n?`<span class="badge b-haut">${n} hors norme</span>`:'<span class="badge b-normal">RAS</span>'}</div></div>
+          <div style="margin-top:6px;font-size:12px">${b.resultats.length} résultats${b.pj&&b.pj.length?' · 📎 '+b.pj.length:''} · ${n?`<span class="badge b-haut">${n} hors norme</span>`:'<span class="badge b-normal">RAS</span>'}</div></div>
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" opacity=".5"><path d="M9 6l6 6-6 6"/></svg>
       </a>`;}).join(''):'<div class="empty"><span class="emo">🧪</span>Aucun bilan enregistré</div>'}`;
 }
@@ -563,18 +714,21 @@ function vBilan(id){
       <div style="min-width:0"><div class="row-name" style="font-size:17px">${fmtDate(b.date,{weekday:'long',day:'numeric',month:'long',year:'numeric'})}</div>
       <div class="muted small">${esc(b.labo||'Laboratoire non précisé')} · ${b.resultats.length} résultats · ${n} hors norme</div></div>
     </div>
-    ${b.notes?`<div class="obs" style="margin:-2px 0 12px">📝 ${esc(b.notes)}</div>`:''}
+    ${b.notes?`<div class="obs" style="margin:-2px 0 12px;white-space:pre-wrap">📝 ${esc(b.notes)}</div>`:''}
+    ${b.pj&&b.pj.length?`<div class="group-title">Documents · ${b.pj.length}</div><div class="card glass"><div class="thumbs" id="pjList"></div></div>`:''}
     ${Object.entries(g).map(([c,rs])=>`<div class="group-title">${esc(c)}</div><div class="card glass" style="padding:8px 14px"><table class="res">${rs.map(r=>`
       <tr><td><a href="#/param/${encodeURIComponent(keyOf(r.param))}"><b>${esc(r.param)}</b></a><div class="muted" style="font-size:12px">${esc(refTxt(r))}${r.obs?' · '+esc(r.obs):''}</div></td>
       <td class="v">${esc(r.val)} <span class="muted" style="font-weight:400">${esc(r.unit)}</span><br>${badge(status(r))}</td></tr>`).join('')}</table></div>`).join('')}
     <div class="btn-row"><a class="btn" href="#/modifier/${b.id}">✏️ Modifier</a><a class="btn" href="#/ajouter/${b.id}">＋ Résultat</a></div>
     <button class="btn danger block" id="delB">🗑️ Supprimer ce bilan</button>`;
-  $('#delB').onclick=()=>{ if(confirm('Supprimer définitivement ce bilan ?')){ db.bilans=db.bilans.filter(x=>x.id!==id); save(); toast('Bilan supprimé'); location.hash='#/bilans'; } };
+  if(b.pj&&b.pj.length) Promise.all(b.pj.map(i=>IDB.get(i).catch(()=>null))).then(os=>{ const el=$('#pjList'); if(el) el.innerHTML=os.filter(Boolean).map(o=>thumbHTML(o)).join('')||'<span class="muted small">Documents absents de cet appareil</span>'; });
+  $('#pjList')?.addEventListener('click',e=>{ const t=e.target.closest('[data-pj]'); if(t) openPJ(t.dataset.pj); });
+  $('#delB').onclick=()=>{ if(confirm('Supprimer définitivement ce bilan ?')){ (b.pj||[]).forEach(i=>IDB.del(i).catch(()=>{})); db.bilans=db.bilans.filter(x=>x.id!==id); save(); toast('Bilan supprimé'); location.hash='#/bilans'; } };
 }
 
 /* ---------- Formulaire ---------- */
 function rowHTML(r={}){
-  return `<div class="frow glass">
+  return `<div class="frow glass" style="--i:0">
     <button type="button" class="rm" title="Retirer">×</button>
     <div class="num"></div>
     <div class="grid2 mb">
@@ -617,6 +771,13 @@ function burst(x,y){
   }
 }
 
+async function openPJ(id){
+  const o=await IDB.get(id); if(!o) return toast('Document introuvable');
+  if(o.type.startsWith('image/')){ const lb=$('#lightbox'); lb.querySelector('img').src=o.data; lb.classList.add('on'); }
+  else { const b=await (await fetch(o.data)).blob(); window.open(URL.createObjectURL(b),'_blank'); }
+}
+function thumbHTML(o,busy){ return o.type.startsWith('image/')?`<div class="thumb ${busy?'busy':''}" data-pj="${o.id}" style="background-image:url('${o.data}')"></div>`:`<div class="thumb pdf ${busy?'busy':''}" data-pj="${o.id}">📄<small>${esc(o.name||'PDF')}</small></div>`; }
+
 function vForm(mode,id){
   const editing=mode==='edit'?db.bilans.find(x=>x.id===id):null;
   if(mode==='edit'&&!editing){ location.hash='#/bilans'; return; }
@@ -628,6 +789,13 @@ function vForm(mode,id){
   $('#view').innerHTML=`
     <datalist id="dlCats">${CATS.map(c=>`<option value="${c}">`).join('')}</datalist>
     <datalist id="dlParams">${[...R.values()].map(p=>`<option value="${esc(p.param)}">`).join('')}</datalist>
+    <div class="card glass" >
+      <details class="paste" open><summary>📋 Coller un bilan préparé (texte)</summary>
+        <p class="small muted">Colle ici le bloc préparé par Claude (lignes Date:, Labo:, Titre: puis une ligne par résultat). Format : Catégorie ⇥ Paramètre ⇥ Résultat ⇥ Unité ⇥ Valeurs de référence ⇥ Observation (copié depuis Excel ou un tableau).</p>
+        <textarea class="in" id="pasteTxt" style="min-height:110px" placeholder="Biochimie	Glycémie	5,10	mmol/L	4,11–6,05"></textarea>
+        <div class="btn-row"><button type="button" class="btn" id="pasteGo">Analyser et ajouter</button></div>
+      </details>
+    </div>
     ${editing?'':`<div class="card glass"><label class="f">Enregistrer dans</label>
       <select class="in" id="target"><option value="">✨ Nouveau bilan</option>${sortedBilans().map(b=>`<option value="${b.id}" ${b.id===target?'selected':''}>${fmtDate(b.date)} — ${esc(b.titre||'Bilan')}</option>`).join('')}</select></div>`}
     <div class="card glass" id="bilanFields">
@@ -641,18 +809,11 @@ function vForm(mode,id){
     <div class="group-title">Résultats</div>
     <div id="rows">${rows.map(rowHTML).join('')}</div>
     <button type="button" class="btn block" id="addRow">＋ Ajouter une ligne</button>
-    <div class="card glass" style="margin-top:12px">
-      <details class="paste"><summary>📋 Coller un tableau de résultats</summary>
-        <p class="small muted">Format : Catégorie ⇥ Paramètre ⇥ Résultat ⇥ Unité ⇥ Valeurs de référence ⇥ Observation (copié depuis Excel ou un tableau).</p>
-        <textarea class="in" id="pasteTxt" style="min-height:110px" placeholder="Biochimie	Glycémie	5,10	mmol/L	4,11–6,05"></textarea>
-        <div class="btn-row"><button type="button" class="btn" id="pasteGo">Analyser et ajouter</button></div>
-      </details>
-    </div>
     <div class="btn-row"><button class="btn primary block" id="saveBtn">💾 Enregistrer et actualiser le registre</button></div>`;
 
   const rowsEl=$('#rows');
   const live=el=>{ const r=readRow(el); el.querySelector('.live').innerHTML=r.param&&r.val?badge(status(r))+` <span class="muted">${esc(refTxt(r))}</span>`:''; };
-  const renum=()=>rowsEl.querySelectorAll('.frow').forEach((el,i)=>{ el.querySelector('.num').textContent='Résultat '+(i+1); live(el); });
+  const renum=()=>rowsEl.querySelectorAll('.frow').forEach((el,i)=>{ el.querySelector('.num').innerHTML='Résultat '+(i+1); live(el); });
   rowsEl.addEventListener('input',e=>{ const el=e.target.closest('.frow'); if(el) live(el); });
   rowsEl.addEventListener('change',e=>{
     if(e.target.dataset.f!=='param') return;
@@ -666,7 +827,11 @@ function vForm(mode,id){
     else { el.querySelectorAll('input').forEach(i=>i.value=''); live(el); } });
   $('#addRow').onclick=()=>{ buzz(); rowsEl.insertAdjacentHTML('beforeend',rowHTML()); renum(); rowsEl.lastElementChild.querySelector('input').focus(); };
   $('#pasteGo').onclick=()=>{
-    const list=parsePaste($('#pasteTxt').value); if(!list.length){ toast('Aucune ligne reconnue'); return; }
+    let raw=$('#pasteTxt').value, meta=0;
+    raw=raw.replace(/^\s*(date|labo|laboratoire|titre|intitul[ée]|notes?)\s*[:=]\s*(.+)$/gim,(_,k,v)=>{ v=v.trim(); k=k.toLowerCase(); meta++;
+      if(k==='date'){ const m=v.match(/(\d{4})-(\d{2})-(\d{2})/)||v.match(/(\d{1,2})[\/.\-](\d{1,2})[\/.\-](\d{4})/); if(m){ const iso=m[1].length===4?`${m[1]}-${m[2]}-${m[3]}`:`${m[3]}-${m[2].padStart(2,'0')}-${m[1].padStart(2,'0')}`; $('#fDate').value=iso; } }
+      else if(k.startsWith('labo')) $('#fLabo').value=v; else if(k.startsWith('not')) $('#fNotes').value=v; else $('#fTitre').value=v; return ''; });
+    const list=parsePaste(raw); if(!list.length){ toast(meta?'En-tête importé':'Aucune ligne reconnue'); return; }
     rowsEl.querySelectorAll('.frow').forEach(el=>{ const r=readRow(el); if(!r.param&&!r.val) el.remove(); });
     rowsEl.insertAdjacentHTML('beforeend',list.map(rowHTML).join('')); renum(); $('#pasteTxt').value=''; toast(list.length+' ligne(s) ajoutée(s)');
   };
@@ -675,21 +840,26 @@ function vForm(mode,id){
   if(tSel){ tSel.onchange=sync; sync(); }
   renum();
 
-  $('#saveBtn').onclick=e=>{
+  const formPJ=[];
+  $('#saveBtn').onclick=async e=>{
     const res=[...rowsEl.querySelectorAll('.frow')].map(readRow).filter(r=>r.param&&r.val);
-    if(!res.length){ toast('Renseignez au moins un paramètre et son résultat'); buzz(60); return; }
+    const notes=$('#fNotes').value.trim();
+    if(!res.length&&!formPJ.length&&!(notes&&!(tSel&&tSel.value))){ toast('Renseignez un résultat ou ajoutez un document'); buzz(60); return; }
     const bb=e.currentTarget.getBoundingClientRect(); const celebrate=()=>{ burst(bb.left+bb.width/2,bb.top); buzz([12,40,12]); };
+    let ids=[];
+    try{ for(const o of formPJ){ await IDB.put(o); ids.push(o.id); } }catch(err){ toast('⚠️ Document non conservé (stockage plein ?)'); ids=[]; }
     if(editing){
-      Object.assign(editing,{date:$('#fDate').value||editing.date,labo:$('#fLabo').value.trim(),titre:$('#fTitre').value.trim(),notes:$('#fNotes').value.trim(),resultats:res});
+      Object.assign(editing,{date:$('#fDate').value||editing.date,labo:$('#fLabo').value.trim(),titre:$('#fTitre').value.trim(),notes,resultats:res,pj:[...(editing.pj||[]),...ids]});
       save(); celebrate(); toast('Bilan mis à jour ✔'); location.hash='#/bilan/'+editing.id; return;
     }
     if(tSel&&tSel.value){
       const b=db.bilans.find(x=>x.id===tSel.value);
       res.forEach(r=>{ const i=b.resultats.findIndex(x=>keyOf(x.param)===keyOf(r.param)); i>=0?b.resultats[i]=r:b.resultats.push(r); });
+      b.pj=[...(b.pj||[]),...ids];
       save(); celebrate(); toast('Registre actualisé ✔'); location.hash='#/bilan/'+b.id; return;
     }
     if(!$('#fDate').value){ toast('Indiquez la date du bilan'); return; }
-    db.bilans.push({id:uid(),date:$('#fDate').value,labo:$('#fLabo').value.trim(),titre:$('#fTitre').value.trim()||'Bilan',notes:$('#fNotes').value.trim(),resultats:res});
+    db.bilans.push({id:uid(),date:$('#fDate').value,labo:$('#fLabo').value.trim(),titre:$('#fTitre').value.trim()||'Bilan',notes,resultats:res,pj:ids});
     save(); celebrate(); toast('Registre actualisé ✔'); location.hash='#/registre';
   };
 }
@@ -723,7 +893,7 @@ function route(){
   render();
   const v=$('#view'); v.classList.remove('enter'); void v.offsetWidth; v.dataset.dir=d; v.classList.add('enter');
 }
-window.addEventListener('hashchange',()=>{ navDepth++; route(); });
+window.addEventListener('hashchange',()=>{ if(!user) return; navDepth++; route(); });
 document.querySelectorAll('[data-go]').forEach(b=>b.onclick=()=>{ buzz(); if(location.hash===b.dataset.go) return; location.hash=b.dataset.go; });
 
 /* Morph partagé : la ligne cliquée se transforme en fiche détail */
@@ -748,24 +918,225 @@ window.addEventListener('deviceorientation',e=>{
 /* ============ FEUILLE « PLUS » ============ */
 let installEvt=null;
 window.addEventListener('beforeinstallprompt',e=>{ e.preventDefault(); installEvt=e; });
-const openSheet=o=>{ $('#sheet').classList.toggle('open',o); $('#sheetBg').classList.toggle('open',o); $('#moreTab').classList.toggle('on',o); if(!o) document.querySelectorAll('.tab[data-i]').forEach(t=>t.classList.toggle('on',+t.dataset.i===prev.idx)); };
+const openSheet=o=>{ if(o&&user) $('#sheetUser').innerHTML=`<div class="avatar" style="display:grid;background:${user.g};box-shadow:0 0 18px ${user.glow}">${user.ini}</div><div><b>${esc(user.name)}</b><div class="small muted">☁️ GitHub · ${esc((cfgGH()||{}).repo||'')}</div></div>`; $('#sheet').classList.toggle('open',o); $('#sheetBg').classList.toggle('open',o); $('#moreTab').classList.toggle('on',o); if(!o) document.querySelectorAll('.tab[data-i]').forEach(t=>t.classList.toggle('on',+t.dataset.i===prev.idx)); };
 $('#moreTab').onclick=()=>{ buzz(); openSheet(true); };
 $('#sheetBg').onclick=()=>openSheet(false);
 $('#sheet').onclick=e=>{
   const act=e.target.closest('[data-act]')?.dataset.act; if(!act) return; buzz(); openSheet(false);
   if(act==='install'){ if(installEvt){ installEvt.prompt(); installEvt=null; } else alert(/iphone|ipad/i.test(navigator.userAgent)?'Safari : bouton Partager ⬆️ puis « Sur l\'écran d\'accueil ».':'Chrome : menu ⋮ puis « Ajouter à l\'écran d\'accueil » ou « Installer l\'application ».'); }
-  if(act==='export'){ const blob=new Blob([JSON.stringify(db,null,2)],{type:'application/json'}); const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download='dossier-sante-'+today()+'.json'; a.click(); setTimeout(()=>URL.revokeObjectURL(a.href),1000); toast('Sauvegarde téléchargée'); }
+  if(act==='export') exportAll();
   if(act==='import') $('#fileIn').click();
   if(act==='print') setTimeout(()=>window.print(),350);
-  if(act==='reset'&&confirm('Effacer toutes les données de cet appareil et revenir au bilan initial ?')){ db=structuredClone(SEED); save(); location.hash='#/registre'; route(); toast('Réinitialisé'); }
+  if(act==='logout') lock();
+  if(act==='unlink') logoutDevice();
+  if(act==='sync'){ setSync('wait'); syncNow().then(()=>toast(getDev(user.id)?.dirty?'Hors ligne — réessaie plus tard':'☁️ Synchronisé')); }
+  if(act==='pw'){ $('#pw1').value=''; $('#pw2').value=''; $('#pwMsg').textContent=''; $('#pwModal').classList.add('on'); }
+  if(act==='pin') showLogin(user.id,'change');
+  if(act==='reset'&&confirm('Effacer tous les résultats de '+user.first+' (sur tous ses appareils) ?')){ db={version:1,bilans:[]}; save(); location.hash='#/registre'; route(); toast('Données effacées'); }
 };
 $('#fileIn').onchange=e=>{
   const f=e.target.files[0]; if(!f) return;
-  const rd=new FileReader(); rd.onload=()=>{ try{ const d=JSON.parse(rd.result); if(!Array.isArray(d.bilans)) throw 0; if(confirm('Remplacer les données actuelles par cette sauvegarde ?')){ db=d; save(); route(); toast('Sauvegarde importée ✔'); } }catch(err){ toast('Fichier invalide'); } e.target.value=''; };
+  const rd=new FileReader(); rd.onload=()=>{ try{ const d=JSON.parse(rd.result); if(!Array.isArray(d.bilans)) throw 0; if(confirm('Remplacer les données actuelles par cette sauvegarde ?')){ const att=d.attachments||[]; delete d.attachments; db=d; save(); Promise.all(att.map(o=>IDB.put(o))).catch(()=>toast('⚠️ Documents non restaurés')); route(); toast('Sauvegarde importée ✔'); } }catch(err){ toast('Fichier invalide'); } e.target.value=''; };
   rd.readAsText(f);
 };
 
-save(); route();
+async function exportAll(){
+  let att=[]; try{ const used=new Set(db.bilans.flatMap(b=>b.pj||[])); att=(await IDB.all()).filter(o=>used.has(o.id)); }catch(e){}
+  const blob=new Blob([JSON.stringify({...db,attachments:att},null,2)],{type:'application/json'});
+  const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download='dossier-sante-'+user.id+'-'+today()+'.json'; a.click(); setTimeout(()=>URL.revokeObjectURL(a.href),1500);
+  toast('Sauvegarde téléchargée'+(att.length?' (avec '+att.length+' document'+(att.length>1?'s':'')+')':''));
+}
+$('#lightbox').onclick=()=>$('#lightbox').classList.remove('on');
+
+/* ============ CONNEXION ============ */
+const L={uid:null,mode:'pick',pin:'',first:'',busy:false,pending:null};
+function showLogin(uid,mode){
+  document.body.classList.add('locked'); openSheet(false);
+  L.uid=uid||null; L.pin=''; L.first=''; L.busy=false;
+  if(!uid){ L.mode=cfgGH()?'pick':'nodb'; L.pending=null; }
+  else L.mode=mode||(getDev(uid)?'enter':'signin');
+  drawLogin();
+}
+const logoSVG='<div class="lg-logo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h4l3-8 4 16 3-8h4"/></svg></div>';
+function drawLogin(){
+  const box=$('#login');
+  if(L.mode==='nodb'){
+    box.innerHTML=`<div class="lg-in">${logoSVG}<h1 class="lg-h">Configuration</h1>
+      <p class="muted small" style="margin:0 0 18px">Où sont stockés les dossiers chiffrés ?</p>
+      <form class="lg-form glass" id="dbForm">
+        <label class="f">Compte GitHub</label><input class="in mb" id="ghOwner" placeholder="ex. mzangre" required autocapitalize="off">
+        <label class="f">Dépôt privé des données</label><input class="in mb" id="ghRepo" value="${esc(GH_REPO)}" required autocapitalize="off">
+        <button class="btn primary block" type="submit">Enregistrer</button></form>
+      <p class="foot">Une fois l'appli publiée sur ton-compte.github.io, cet écran n'apparaît plus.</p></div>`;
+    $('#dbForm').onsubmit=e=>{ e.preventDefault(); localStorage.setItem('ds-gh',JSON.stringify({owner:$('#ghOwner').value.trim(),repo:$('#ghRepo').value.trim()})); showLogin(null); };
+    return;
+  }
+  if(L.mode==='pick'){
+    box.innerHTML=`<div class="lg-in">${logoSVG}
+      <h1 class="lg-h">Dossier santé</h1><p class="muted small" style="margin:0 0 26px">Qui se connecte ?</p>
+      <div class="profiles">${USERS.map((u,i)=>`<button class="profile glass" data-u="${u.id}" style="--i:${i}">
+        <span class="pav" style="background:${u.g};box-shadow:0 0 26px ${u.glow}">${u.ini}</span>
+        <b>${esc(u.first)}</b><small>${esc(u.name.split(' ').slice(1).join(' '))}</small>
+        <em>${getDev(u.id)?'🔒 Code rapide':'☁️ Se connecter'}</em></button>`).join('')}</div>
+      <p class="foot">☁️ Dossiers synchronisés sur GitHub et chiffrés de bout en bout.<br>Ni l'autre profil, ni GitHub ne peuvent les lire.</p></div>`;
+    box.querySelectorAll('.profile').forEach(b=>b.onclick=()=>{ buzz(); b.classList.add('chosen'); setTimeout(()=>showLogin(b.dataset.u),260); });
+    return;
+  }
+  const u=USERS.find(x=>x.id===L.uid);
+  const head=`<button class="lg-back" id="lgBack">‹ ${['change','newpin','newconfirm'].includes(L.mode)&&user?'Annuler':'Profils'}</button>
+    <span class="pav big" style="background:${u.g};box-shadow:0 0 34px ${u.glow}">${u.ini}</span><h2 class="lg-name">${esc(u.name)}</h2>`;
+  if(L.mode==='signin'||L.mode==='newdossier'){
+    const nd=L.mode==='newdossier';
+    box.innerHTML=`<div class="lg-in pad-in">${head}
+      <div class="lg-t">${nd?'Création de ton dossier':'Connexion'}</div>
+      <div class="muted small" style="margin-bottom:16px">${nd?'Aucun dossier en ligne pour l\'instant : confirme ton mot de passe pour le créer':'Première connexion sur ce téléphone'}</div>
+      <form class="lg-form glass" id="siForm" autocomplete="on">
+        ${nd?`<label class="f">Confirme le mot de passe du dossier</label><input class="in mb" id="siPw2" type="password" autocomplete="new-password" required>
+              <p class="small muted" style="margin:-2px 0 10px">⚠️ Sans ce mot de passe, le dossier ne peut pas être déchiffré. Note-le en lieu sûr.</p>`
+          :`<label class="f">Jeton d'accès GitHub</label><input class="in mb" id="siTok" type="password" placeholder="github_pat_…" autocomplete="off" required>
+            <label class="f">Mot de passe du dossier</label><input class="in mb" id="siPw" type="password" autocomplete="current-password" minlength="8" required>`}
+        <div class="lg-msg" id="lgMsg"></div>
+        <button class="btn primary block" type="submit" id="siBtn">${nd?'Créer mon dossier':'Se connecter'}</button></form>
+      <p class="foot">${nd?'8 caractères minimum.':'Ensuite, tu choisiras un code rapide à 6 chiffres pour ce téléphone.'}</p></div>`;
+    $('#lgBack').onclick=()=>{ buzz(); showLogin(null); };
+    $('#siForm').onsubmit=async e=>{ e.preventDefault(); if(L.busy) return; L.busy=true; const btn=$('#siBtn'),lbl=btn.textContent; btn.textContent='Connexion…'; btn.disabled=true; $('#lgMsg').textContent='';
+      try{ nd?await doCreate($('#siPw2').value):await doSignIn($('#siTok').value.trim(),$('#siPw').value); }
+      catch(err){ console.error(err); $('#lgMsg').textContent=err.offline?'Pas de connexion internet':err.message; buzz([40,40,40]); btn.textContent=lbl; btn.disabled=false; L.busy=false; } };
+    return;
+  }
+  const title={enter:'Entre ton code',create:'Choisis ton code rapide',confirm:'Confirme ton code',change:'Code actuel',newpin:'Nouveau code',newconfirm:'Confirme le nouveau code'}[L.mode];
+  const sub={enter:'6 chiffres',create:'6 chiffres pour ouvrir l\'appli sur ce téléphone',confirm:'Retape le même code',change:'Pour changer ton code rapide',newpin:'6 chiffres',newconfirm:'Retape le nouveau code'}[L.mode];
+  box.innerHTML=`<div class="lg-in pad-in">${head}
+    <div class="lg-t">${title}</div><div class="muted small">${sub}</div>
+    <div class="dots" id="dots">${Array.from({length:6},(_,i)=>`<i class="${i<L.pin.length?'on':''}"></i>`).join('')}</div>
+    <div class="lg-msg" id="lgMsg"></div>
+    <div class="keypad">${[1,2,3,4,5,6,7,8,9,'forgot',0,'del'].map(k=>k==='forgot'?(L.mode==='enter'?'<button class="key ghost" data-k="forgot">Oublié ?</button>':'<span></span>'):k==='del'?'<button class="key ghost" data-k="del">⌫</button>':`<button class="key" data-k="${k}">${k}</button>`).join('')}</div>
+  </div>`;
+  $('#lgBack').onclick=()=>{ buzz(); if(user&&['change','newpin','newconfirm'].includes(L.mode)){ document.body.classList.remove('locked'); route(); } else showLogin(null); };
+  box.querySelector('.keypad').onclick=e=>{ const k=e.target.closest('[data-k]')?.dataset.k; if(k!=null) key(k); };
+}
+function paintDots(state){ const d=$('#dots'); if(!d) return; d.querySelectorAll('i').forEach((x,i)=>x.classList.toggle('on',i<L.pin.length)); d.className='dots'+(state?' '+state:''); }
+function fail(msg){ buzz([40,40,40]); const d=$('#dots'); if(!d) return; d.classList.remove('shake'); void d.offsetWidth; paintDots('shake'); $('#lgMsg').textContent=msg; L.pin=''; setTimeout(()=>paintDots(),450); }
+
+/* Récupère d'anciennes données locales (versions précédentes de l'appli) */
+async function migrateLocal(uid){
+  if(uid==='mathieu'){ try{ const o=JSON.parse(localStorage.getItem(KEY)); if(o&&Array.isArray(o.bilans)) return o; }catch(e){} }
+  let r; try{ r=JSON.parse(localStorage.getItem('ds-u-'+uid)); }catch(e){}
+  if(!r) return null;
+  for(let t=0;t<3;t++){
+    const pin=prompt('Des données de l\'ancienne version sont sur ce téléphone.\nTape ton ANCIEN code à 6 chiffres pour les récupérer (laisse vide pour ignorer) :');
+    if(!pin) return null;
+    try{ const k=await pbk(pin,fromB64(r.salt)); return await decJSON(k,{iv:r.iv,ct:r.ct}); }catch(e){ alert('Code incorrect'); }
+  }
+  return null;
+}
+async function doSignIn(tok,pw){
+  if(pw.length<8) throw new Error('Mot de passe : 8 caractères minimum');
+  G.tok=tok; await checkRepo();
+  const f=await getFile(L.uid);
+  if(f){
+    let k;
+    try{ k=await importDEK(await decRaw(await pbk(pw,fromB64(f.row.wrap_salt)),{iv:f.row.wrap_iv,ct:f.row.wrap_ct})); }
+    catch(e){ throw new Error('Mot de passe du dossier incorrect'); }
+    const data=await decJSON(k,{iv:f.row.data_iv,ct:f.row.data_ct});
+    L.pending={tok,k,data,row:f.row,sha:f.sha};
+    L.busy=false; L.mode='create'; L.pin=''; drawLogin(); toast('Connecté·e ☁️ — choisis ton code rapide'); return;
+  }
+  L.pending={tok,pw}; L.busy=false; L.mode='newdossier'; drawLogin();
+}
+async function doCreate(pw2){
+  const P=L.pending; if(pw2!==P.pw) throw new Error('Les mots de passe ne correspondent pas');
+  const k=await newDEK(), data=(await migrateLocal(L.uid))||{version:1,bilans:[]};
+  const salt=rand(16), w=await encRaw(await pbk(P.pw,salt),await rawDEK(k)), e=await encJSON(k,data);
+  const row={v:1,wrap_salt:toB64(salt),wrap_iv:w.iv,wrap_ct:w.ct,data_iv:e.iv,data_ct:e.ct,updated_at:new Date().toISOString()};
+  const sha=await putFile(L.uid,row,null);
+  localStorage.removeItem('ds-u-'+L.uid); if(L.uid==='mathieu') localStorage.removeItem(KEY);
+  L.pending={tok:P.tok,k,data,row,sha}; L.busy=false; L.mode='create'; L.pin=''; drawLogin(); toast('Dossier créé sur GitHub 🎉 — choisis ton code rapide');
+}
+async function key(k){
+  if(L.busy) return;
+  if(k==='forgot'){ const u=USERS.find(x=>x.id===L.uid);
+    if(confirm('Tu vas te reconnecter avec ton jeton GitHub et le mot de passe du dossier, puis choisir un nouveau code.\nTes données en ligne sont conservées.')){
+      const d=getDev(L.uid); if(d&&d.dirty&&!confirm('⚠️ Des modifications n\'ont pas encore été envoyées en ligne et seront perdues. Continuer ?')) return;
+      localStorage.removeItem(DEV(L.uid)); showLogin(L.uid,'signin'); } return; }
+  if(k==='del'){ L.pin=L.pin.slice(0,-1); paintDots(); buzz(); return; }
+  if(L.pin.length>=6) return;
+  L.pin+=k; buzz(6); paintDots(); $('#lgMsg').textContent='';
+  if(L.pin.length<6) return;
+  const pin=L.pin; L.busy=true;
+  try{
+    if(L.mode==='create'||L.mode==='newpin'){ L.first=pin; L.pin=''; L.mode=L.mode==='create'?'confirm':'newconfirm'; L.busy=false; setTimeout(drawLogin,180); return; }
+    if(L.mode==='confirm'||L.mode==='newconfirm'){
+      if(pin!==L.first){ L.mode=L.mode==='confirm'?'create':'newpin'; L.busy=false; drawLogin(); fail('Les codes ne correspondent pas, recommence'); return; }
+      paintDots('ok'); $('#lgMsg').textContent='Sécurisation…';
+      const salt=rand(16), pk=await pbk(pin,salt);
+      if(L.mode==='newconfirm'){
+        const d=getDev(user.id); d.pinSalt=toB64(salt); d.dekWrap=await encRaw(pk,await rawDEK(dek)); setDev(user.id,d);
+        L.busy=false; document.body.classList.remove('locked'); route(); toast('Code rapide modifié 🔑'); return;
+      }
+      const P=L.pending;
+      const d={pinSalt:toB64(salt),dekWrap:await encRaw(pk,await rawDEK(P.k)),tok:await encJSON(P.k,P.tok),sha:P.sha,
+        wrap:{wrap_salt:P.row.wrap_salt,wrap_iv:P.row.wrap_iv,wrap_ct:P.row.wrap_ct},
+        cache:{iv:P.row.data_iv,ct:P.row.data_ct,updated_at:P.row.updated_at},dirty:false};
+      setDev(L.uid,d); L.pending=null;
+      G.tok=P.tok; enterApp(L.uid,P.k,P.data,'Dossier prêt 🎉'); return;
+    }
+    if(L.mode==='enter'||L.mode==='change'){
+      const d=getDev(L.uid); paintDots('ok');
+      let k2;
+      try{ k2=await importDEK(await decRaw(await pbk(pin,fromB64(d.pinSalt)),d.dekWrap)); }catch(e){ L.busy=false; fail('Code incorrect'); return; }
+      if(L.mode==='change'){ L.pin=''; L.mode='newpin'; L.busy=false; drawLogin(); return; }
+      G.tok=await decJSON(k2,d.tok);
+      const data=await decJSON(k2,d.cache);
+      enterApp(L.uid,k2,data,'Bonjour '+USERS.find(x=>x.id===L.uid).first+' 👋',true); return;
+    }
+  }catch(e){ console.error(e); L.busy=false; fail('Erreur : '+e.message); }
+}
+function enterApp(uid,k2,data,msg,sync){
+  user=USERS.find(x=>x.id===uid); dek=k2; db=data; if(!Array.isArray(db.bilans)) db.bilans=[];
+  const box=$('#login'); const r=box.getBoundingClientRect(); burst(r.width/2,r.height*.35);
+  box.classList.add('leaving'); buzz([10,30,10]);
+  setTimeout(()=>{ document.body.classList.remove('locked'); box.classList.remove('leaving'); box.innerHTML='';
+    ui.filter='Tous'; ui.q=''; prev={lv:0,idx:0}; first=true; navDepth=0;
+    if(location.hash!=='#/registre') history.replaceState(null,'','#/registre'); route(); toast(msg);
+    setSync('wait');
+    if(sync) syncNow(); else setSync('ok');
+  },420);
+}
+async function syncNow(){ if(!user) return; await pushData(); const changed=await pull(); if(changed&&user){ route(); toast('☁️ Mis à jour depuis un autre appareil'); } }
+function lock(){ user=null; dek=null; db=null; G.tok=null; $('#view').innerHTML=''; showLogin(null); }
+async function logoutDevice(){
+  const d=getDev(user.id);
+  if(d&&d.dirty){ await pushData(); if(getDev(user.id)?.dirty&&!confirm('⚠️ Des modifications ne sont pas encore en ligne (pas de connexion). Elles seront perdues. Continuer ?')) return; }
+  localStorage.removeItem(DEV(user.id)); toast('Appareil déconnecté'); lock();
+}
+async function changePassword(){
+  const np=$('#pw1').value, np2=$('#pw2').value;
+  if(np.length<8){ $('#pwMsg').textContent='8 caractères minimum'; return; }
+  if(np!==np2){ $('#pwMsg').textContent='Les mots de passe ne correspondent pas'; return; }
+  $('#pwMsg').textContent='Mise à jour…'; $('#pwSave').disabled=true;
+  try{
+    await pushData(); const d=getDev(user.id); if(d.dirty) throw Object.assign(new Error(''),{offline:true});
+    const f=await getFile(user.id), salt=rand(16), w=await encRaw(await pbk(np,salt),await rawDEK(dek));
+    const wrap={wrap_salt:toB64(salt),wrap_iv:w.iv,wrap_ct:w.ct};
+    const sha=await putFile(user.id,{...(f?f.row:{v:1,data_iv:d.cache.iv,data_ct:d.cache.ct,updated_at:d.cache.updated_at}),...wrap},f&&f.sha);
+    const d2=getDev(user.id); d2.wrap=wrap; d2.sha=sha; setDev(user.id,d2);
+    $('#pwModal').classList.remove('on'); toast('Mot de passe modifié 🔐');
+  }catch(e){ $('#pwMsg').textContent=e.offline?'Connexion internet requise':e.message; }
+  $('#pwSave').disabled=false;
+}
+let hiddenAt=0;
+document.addEventListener('visibilitychange',()=>{
+  if(document.hidden){ hiddenAt=Date.now(); return; }
+  if(user&&hiddenAt&&Date.now()-hiddenAt>3*60*1000){ lock(); toast('Verrouillé après inactivité'); return; }
+  if(user) syncNow();
+});
+document.addEventListener('keydown',e=>{ if(!document.body.classList.contains('locked')||!['enter','create','confirm','change','newpin','newconfirm'].includes(L.mode)) return; if(/^\d$/.test(e.key)) key(e.key); else if(e.key==='Backspace') key('del'); });
+$('#avatar').onclick=()=>{ buzz(); openSheet(true); };
+$('#pwCancel').onclick=()=>$('#pwModal').classList.remove('on');
+$('#pwSave').onclick=changePassword;
+
+showLogin(null);
 </script>
 </body>
 </html>
